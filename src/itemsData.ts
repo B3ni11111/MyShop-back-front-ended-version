@@ -1,3 +1,4 @@
+import type { Item } from './types/item';
 import laptopImg from "./assets/imgs/laptop.jpeg";
 import smartphoneImg from "./assets/imgs/smartphone.jpeg";
 import headphonesImg from "./assets/imgs/headphones.jpeg";
@@ -8,10 +9,10 @@ import hoodie3Img from "./assets/imgs/b_4.jpg";
 import macbookImg from "./assets/imgs/b_5.jpg";
 import coffieImg from "./assets/imgs/b_6.jpg";
 import pspImg from "./assets/imgs/b_7.jpg";
+import lenovo from './assets/imgs/lenovo.png'
 
 
-
-export const itemsData = [
+export const itemsData: Item[] = [
     {
         id: 1,
         product: "מחשב נייד HP Laptop 15-FD0090NJ / C8BX7EA - צבע Natural silver",
@@ -87,5 +88,13 @@ export const itemsData = [
         price: 4989,
         img: pspImg,
         info: "הכירו את Legion Go Gen 2 - הדור הבא של מחשב הגיימינג הנייד עטור הפרסים מבית Lenovo. עם בקרים ניתנים להסרה, מסך OLED עוצר נשימה בגודל 8.8 אינץ’ ובקצב רענון 144Hz, וסוללה עוצמתית ליותר זמן משחק - זהו הכוח והגמישות במיטבם, לכל מקום שתרצו לשחק בו.",
-    },
+    }, {
+        id: 11,
+        product:
+            "מחשב נייד IdeaPad Slim 3 15IRH10 מבית Lenovo המחשב מצויד במעבד Intel Core i7-13620H, מסך WUXGA (1920x1200) IPS בגודל 15.3 אינץ', כרטיס מסך Integrated Intel UHD Graphics ומערכת ההפעלה Windows 11 Home, המציעה ממשק משתמש מודרני ונוח לשימוש בעברית ובאנגלית",
+        price: 3000,
+        img: lenovo,
+        info: "הכירו את Legion Go Gen 2 - הדור הבא של מחשב הגיימינג הנייד עטור הפרסים מבית Lenovo. עם בקרים ניתנים להסרה, מסך OLED עוצר נשימה בגודל 8.8 אינץ’ ובקצב רענון 144Hz, וסוללה עוצמתית ליותר זמן משחק - זהו הכוח והגמישות במיטבם, לכל מקום שתרצו לשחק בו.",
+
+    }
 ];

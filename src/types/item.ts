@@ -1,10 +1,8 @@
-export type item = [
-    {
-        id: number,
-        product: string,
-        price: number,
-        img: string,
-        info: string
+export type Item = {
+    id: number,
+    product: string,
+    price: number,
+    img: string,
+    info: string
 
-    }
-]
+}

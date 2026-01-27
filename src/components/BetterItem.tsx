@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -8,12 +8,15 @@ import CardContent from "@mui/material/CardContent";
 
 import theme from "./Theme";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { useContext } from "react";
-import { AppContext } from "../App";
+import { useAppContext } from "../App";
 import { Link } from "react-router-dom";
+
+import type { BetterItemProps } from "../types/BetterItemProps";
 
 const style = {
   position: "absolute",
@@ -29,18 +32,14 @@ const style = {
   color: theme.palette.text.primary,
 };
 
-export default function BetterItem({ i }) {
+export default function BetterItem({ i }: BetterItemProps) {
+  const { addToCart, fav, toggleFav } = useAppContext();
+  const isFav = fav.some((item) => item.id === i.id);
 
-  const { addToCart } = useContext(AppContext)
-
-
-  const [open, setOpen] = React.useState(false);
-  const [expandTitle, setExpandTitle] = React.useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [expandTitle, setExpandTitle] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-
-
 
   return (
     <>
@@ -107,7 +106,6 @@ export default function BetterItem({ i }) {
             ₪{i.price}
           </Typography>
           <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}>
-
           </Box>
         </CardContent>
       </Card>
@@ -166,7 +164,7 @@ export default function BetterItem({ i }) {
                 ₪{i.price}
               </Typography>
               <Link to={`item-page/${i.id}`}>
-                <Button>
+                <Button variant="contained">
                   go to page
                 </Button>
               </Link>
@@ -179,12 +177,18 @@ export default function BetterItem({ i }) {
                 </Button>
                 <Button
                   onClick={() => addToCart(i)}
-                  variant="outlined"
+                  variant="contained"
                   sx={{ borderColor: "primary.main" }}
                   endIcon={<AddShoppingCartIcon />}
                 >
                   Add to cart
                 </Button>
+                <IconButton
+                  onClick={() => toggleFav(i)}
+                  sx={{ color: isFav ? "error.main" : "text.secondary" }}
+                >
+                  {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </IconButton>
               </Box>
             </Box>
           </Box>

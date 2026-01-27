@@ -3,11 +3,11 @@ import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useContext } from "react";
-import { AppContext } from "../App";
+import { useAppContext } from "../App";
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQuantity } = useContext(AppContext)
+  const { cart, removeFromCart, updateQuantity } = useAppContext();
+
   const getTotalPrice = () => {
     return cart.reduce((total, i) => total + i.price * i.quantity, 0);
   };

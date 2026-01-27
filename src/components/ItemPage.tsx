@@ -1,10 +1,10 @@
-import { useContext } from "react";
+
 import { useParams } from "react-router-dom";
-import { AppContext } from "../App";
+import { useAppContext } from "../App";
 
 export default function ItemPage() {
-  const { itemsData, addToCart } = useContext(AppContext);
-  const { id } = useParams();
+  const { itemsData, addToCart } = useAppContext();
+  const { id } = useParams<{ id: string }>();
 
   const item = itemsData?.find((i) => i.id === Number(id));
 

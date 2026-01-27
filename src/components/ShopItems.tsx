@@ -1,5 +1,3 @@
-
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -9,11 +7,9 @@ import BetterItem from "./BetterItem";
 
 import Card from "@mui/material/Card";
 import { Rowing } from "@mui/icons-material";
-import { useContext } from "react";
-import { AppContext } from "../App";
-
+import { useAppContext } from "../App";
 export default function ShopItems() {
-  const { itemsData, } = useContext(AppContext)
+  const { itemsData } = useAppContext();
 
   return (
     <>

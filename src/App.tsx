@@ -1,36 +1,35 @@
 import { useMemo } from "react";
-import { v4 as uuid } from "uuid";
 import "./App.css";
-
-import laptopImg from "./assets/imgs/laptop.jpeg";
-import smartphoneImg from "./assets/imgs/smartphone.jpeg";
-import headphonesImg from "./assets/imgs/headphones.jpeg";
-import iphoneImg from "./assets/imgs/b_1.jpg";
-import hoodieImg from "./assets/imgs/b_2.jpg";
-import hoodie2Img from "./assets/imgs/b_3.jpg";
-import hoodie3Img from "./assets/imgs/b_4.jpg";
-import macbookImg from "./assets/imgs/b_5.jpg";
-import coffieImg from "./assets/imgs/b_6.jpg";
-import pspImg from "./assets/imgs/b_7.jpg";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import { getTheme } from "./components/Theme";
 import useThemePreference from "./hooks/useThemePreference";
 import { itemsData } from "./itemsData";
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import type { AppContextType } from "./types/appContext";
+import type { Item } from "./types/item";
+import type { CartItem } from "./types/cartItem";
 
+export const AppContext = createContext<AppContextType | undefined>(undefined);
 
+export function useAppContext(): AppContextType {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within AppProvider");
+  }
+  return context;
+}
 
-export const AppContext = createContext()
 
 function App() {
 
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [fav, setFav] = useState<Item[]>([]);
 
-  const addToCart = (item) => {
+  const addToCart = (item: Item) => {
     setCart((prevCart) => {
       const isExist = prevCart.find((cartItem) => cartItem.id === item.id);
       if (isExist) {
@@ -44,13 +43,22 @@ function App() {
     });
     console.log(cart);
   };
+  const toggleFav = (item: Item) => {
+    setFav((prevArr) => {
+      const isExist = prevArr.find((favItem) => favItem.id === item.id);
+      if (isExist) {
+        return prevArr.filter((favItem) => favItem.id !== item.id);
+      }
+      return [...prevArr, item];
+    });
+  };
 
-  const removeFromCart = (itemId) => {
+  const removeFromCart = (itemId: number) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
     console.log(cart);
   };
 
-  const updateQuantity = (id, newQ) => {
+  const updateQuantity = (id: number, newQ: number) => {
     if (newQ <= 0) {
       removeFromCart(id);
       return;
@@ -71,7 +79,7 @@ function App() {
   const { mode, toggleTheme } = useThemePreference();
   const theme = useMemo(() => getTheme(mode), [mode]);
 
-  const appData = { itemsData, mode, toggleTheme, cart, addToCart, removeFromCart, updateQuantity, getTotalItems }
+  const appData: AppContextType = { itemsData, fav, toggleFav, mode, toggleTheme, cart, addToCart, removeFromCart, updateQuantity, getTotalItems };
 
   return (
     <>

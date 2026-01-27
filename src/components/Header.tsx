@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, MouseEvent } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
@@ -9,29 +9,30 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link, useNavigate } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Link } from 'react-router-dom';
 import logoImg from '../assets/imgs/logo.jpg';
 import ThemeToggle from './ThemeToggle';
-import { useContext } from "react";
-import { AppContext } from "../App";
 
 const settings = ['Profile', 'Account', 'Logout'];
 
-export default function Header({ cartCount = 0, navigateToCart }) {
-  const {Mode, toggleTheme } = useContext(AppContext)
-  const navigate = useNavigate();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+interface HeaderProps {
+  cartCount?: number;
 
-  const handleOpenNavMenu = (event) => {
+}
+
+export default function Header({ cartCount = 0 }: HeaderProps) {
+  const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
+  const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
+
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -48,15 +49,15 @@ export default function Header({ cartCount = 0, navigateToCart }) {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={'/'}>
-          <Box sx={{
+            <Box sx={{
               width: 120,
               height: 120,
               objectFit: "contain",
               display: { xs: "none", md: "flex" },
               cursor: "pointer",
             }}>
-          <img src={logoImg} alt="Logo" />
-          </Box>
+              <img src={logoImg} alt="Logo" />
+            </Box>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -85,7 +86,7 @@ export default function Header({ cartCount = 0, navigateToCart }) {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              
+
 
 
             </Menu>
@@ -110,24 +111,31 @@ export default function Header({ cartCount = 0, navigateToCart }) {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          
+
 
 
           </Box>
-          <ThemeToggle mode={Mode} toggleTheme={toggleTheme}/>
+          <ThemeToggle />
           <Box
             sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 1 }}
-            >
-            <Link to={'cart'}>
-            <Tooltip title="Shopping Cart">
-              <IconButton>
-                <Badge badgeContent={cartCount} color="error">
-                  <ShoppingCartIcon sx={{ color: "white" }} />
-                </Badge>
-              </IconButton>
-            </Tooltip>
+          >
+            <Link to={'fav'}>
+              <Tooltip title="Favorites">
+                <IconButton>
+                  <FavoriteIcon sx={{ color: "white" }} />
+                </IconButton>
+              </Tooltip>
             </Link>
-            </Box>
+            <Link to={'cart'}>
+              <Tooltip title="Shopping Cart">
+                <IconButton>
+                  <Badge badgeContent={cartCount} color="error">
+                    <ShoppingCartIcon sx={{ color: "white" }} />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+            </Link>
+          </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

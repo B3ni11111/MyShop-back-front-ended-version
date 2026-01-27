@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import type { ThemeMode, ThemePreference } from "../types/appContext";
 
 const STORAGE_KEY = "theme-preference";
 
-export default function useThemePreference() {
-  const [mode, setMode] = useState(() => {
+export default function useThemePreference(): ThemePreference {
+  const [mode, setMode] = useState<ThemeMode>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return stored;
+    if (stored === "light" || stored === "dark") return stored;
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
