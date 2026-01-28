@@ -8,13 +8,15 @@ import ItemPage from './components/ItemPage'
 import Cart from './components/Cart'
 import About from './components/About'
 import Fav from './components/Fav'
+import Home from './components/Home'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { index: true, element: <ShopItems /> },
+      { index: true, element: <Home /> },
+      { path: 'items-layout/:cat', element: <ShopItems /> },
       { path: 'item-page/:id', element: <ItemPage /> },
       { path: 'cart', element: <Cart /> },
       { path: 'about', element: <About /> },

@@ -15,8 +15,12 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useAppContext } from "../App";
 import { Link } from "react-router-dom";
+import InfoIcon from '@mui/icons-material/Info';
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import Tooltip from "@mui/material/Tooltip";
 
 import type { BetterItemProps } from "../types/BetterItemProps";
+import { colors } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -104,11 +108,27 @@ export default function BetterItem({ i }: BetterItemProps) {
           </Typography>
           <Typography variant="body1" sx={{ mt: 1, mb: 1 }}>
             ₪{i.price}
+
+            <span>
+              <IconButton
+                onClick={() => addToCart(i)}
+                sx={{ color: "primary.main" }}
+              >
+                <AddShoppingCartIcon />
+              </IconButton>
+
+            </span>
+            <Tooltip title={i.info}>
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
           </Typography>
           <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}>
           </Box>
         </CardContent>
       </Card>
+      {/* after press*/}
       <Modal
         open={open}
         onClose={handleClose}
@@ -163,7 +183,7 @@ export default function BetterItem({ i }: BetterItemProps) {
               <Typography variant="h6" sx={{ color: "text.secondary", mb: 2 }}>
                 ₪{i.price}
               </Typography>
-              <Link to={`item-page/${i.id}`}>
+              <Link to={`/item-page/${i.id}`}>
                 <Button variant="contained">
                   go to page
                 </Button>

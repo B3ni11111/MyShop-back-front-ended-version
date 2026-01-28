@@ -55,6 +55,7 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
               objectFit: "contain",
               display: { xs: "none", md: "flex" },
               cursor: "pointer",
+
             }}>
               <img src={logoImg} alt="Logo" />
             </Box>

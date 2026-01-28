@@ -4,5 +4,6 @@ export type Item = {
     price: number,
     img: string,
     info: string
+    category: string
 
 }

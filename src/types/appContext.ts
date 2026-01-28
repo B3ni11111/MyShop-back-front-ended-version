@@ -1,5 +1,6 @@
 import type { Item } from "./item";
 import type { CartItem } from "./cartItem";
+import type { catItem } from "./catItem";
 
 
 export type ThemeMode = "light" | "dark";
@@ -12,6 +13,7 @@ export interface ThemePreference {
 export interface AppContextType {
   itemsData: Item[];
   mode: ThemeMode;
+
   toggleTheme: () => void;
   cart: CartItem[];
   fav: Item[];

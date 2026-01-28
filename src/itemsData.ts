@@ -12,6 +12,7 @@ import pspImg from "./assets/imgs/b_7.jpg";
 import lenovo from './assets/imgs/lenovo.png'
 
 
+
 export const itemsData: Item[] = [
     {
         id: 1,
@@ -19,6 +20,7 @@ export const itemsData: Item[] = [
         price: 999,
         img: laptopImg,
         info: "מחשב נייד מבית HP בגודל ''15.6 ברזולוציית FHD (1920x1080), מעבד Intel® Core™ i3-1315U, זיכרון פנימי בנפח 8GB, כונן SSD בנפח 512GB וכולל מערכת הפעלה.",
+        category: 'laptop'
     },
     {
         id: 2,
@@ -27,6 +29,7 @@ export const itemsData: Item[] = [
         price: 199,
         img: headphonesImg,
         info: "אוזניות קשת אלחוטיות Accentum מבית Sennheiser הן הדור הבא באוזניות האלחוטיות המספקות את חתימת הסאונד של Sennheiser באיכות סאונד מעולה וכוללות מצב ביטול רעשים אקטיבי.",
+        category: 'sound'
     },
     {
         id: 3,
@@ -35,6 +38,7 @@ export const itemsData: Item[] = [
         price: 799,
         img: smartphoneImg,
         info: "iPhone 17 Pro Max העוצמתי מבית Apple, בעל מסך 6.9 אינץ' Super Retina XDR, עם חיישן זיהוי פנים, מעבד ראשי A19 Pro עוצמתי, שלוש מצלמות אחוריות 48 מגה פיקסל, מצלמת סלפי 18 מגה פיקסל, אפשרות טעינה אלחוטית ותמיכה ברשת הדור החמישי 5G.",
+        category: 'mobile'
     },
     {
         id: 4,
@@ -43,6 +47,7 @@ export const itemsData: Item[] = [
         price: 4948,
         img: iphoneImg,
         info: "iPhone 17 Pro העוצמתי מבית Apple, בעל מסך 6.3 אינץ' Super Retina XDR, עם חיישן זיהוי פנים, מעבד ראשי A19 Pro עוצמתי, שלוש מצלמות אחוריות 48 מגה פיקסל, מצלמת סלפי 18 מגה פיקסל, אפשרות טעינה אלחוטית ותמיכה ברשת הדור החמישי 5G.",
+        category: 'mobile'
     },
     {
         id: 5,
@@ -50,6 +55,7 @@ export const itemsData: Item[] = [
         price: 131,
         img: hoodieImg,
         info: "קפוצ' Marvel Loki הביעו את אהבתכם לדמויות האהובות עליכם עם קפוצון נוח ומעוצב. פריט אופנה פופולרי בקרב ילדים ומבוגרים כאחד ומהווה דרך נהדרת להביע אהדה למותגים האהובים.",
+        category: 'clothe'
     },
     {
         id: 6,
@@ -57,6 +63,7 @@ export const itemsData: Item[] = [
         price: 131,
         img: hoodie2Img,
         info: "קפוון Marvel Spider Gwen הביעו את אהבתכם לדמויות האהובות עליכם עם קפוצון נוח ומעוצב. פריט אופנה פופולרי בקרב ילדים ומבוגרים כאחד ומהווה דרך נהדרת להביע אהדה למותגים האהובים.",
+        category: 'clothe'
     },
     {
         id: 7,
@@ -64,6 +71,7 @@ export const itemsData: Item[] = [
         price: 131,
         img: hoodie3Img,
         info: "קפוצון Marvel Avengers הביעו את אהבתכם לדמויות האהובות עליכם עם קפוצון נוח ומעוצב. פריט אופנה פופולרי בקרב ילדים ומבוגרים כאחד ומהווה דרך נהדרת להביע אהדה למותגים האהובים.",
+        category: 'clothe'
     },
     {
         id: 8,
@@ -72,6 +80,7 @@ export const itemsData: Item[] = [
         price: 4948,
         img: macbookImg,
         info: "הכירו את ה-MacBook Air החדש מבית Apple  דק יותר, מהיר מתמיד ועוצמתי להפליא, הודות לשבב החדש והמתקדם מבית Apple. עם ביצועים פורצי דרך, חיי סוללה חסרי תקדים ועיצוב אלגנטי וקל במיוחד, הוא מושלם לעבודה, לימודים ויצירה ללא גבולות. כל מה שאתם אוהבים ב-Mac, עכשיו במהירות וביעילות שלא הכרתם.",
+        category: 'laptop'
     },
     {
         id: 9,
@@ -80,6 +89,7 @@ export const itemsData: Item[] = [
         price: 437,
         img: coffieImg,
         info: "חובבי קפה המחפשים מכונת קפה קומפקטית ואופנתית מבלי להתפשר על הטעם?. Inissia, מכונת קפה מבוססת קפסולות, מתאימה לכל חלל בביתכם בזכות גודלה הקומפקטי. היא גם מסוגלת להכין שני גדלי כוסות מתכווננים: אספרסו ולונגו, שניהם עם טעם יוצא דופן.",
+        category: 'electronics'
     },
     {
         id: 10,
@@ -88,6 +98,7 @@ export const itemsData: Item[] = [
         price: 4989,
         img: pspImg,
         info: "הכירו את Legion Go Gen 2 - הדור הבא של מחשב הגיימינג הנייד עטור הפרסים מבית Lenovo. עם בקרים ניתנים להסרה, מסך OLED עוצר נשימה בגודל 8.8 אינץ’ ובקצב רענון 144Hz, וסוללה עוצמתית ליותר זמן משחק - זהו הכוח והגמישות במיטבם, לכל מקום שתרצו לשחק בו.",
+        category: 'laptop'
     }, {
         id: 11,
         product:
@@ -95,6 +106,6 @@ export const itemsData: Item[] = [
         price: 3000,
         img: lenovo,
         info: "הכירו את Legion Go Gen 2 - הדור הבא של מחשב הגיימינג הנייד עטור הפרסים מבית Lenovo. עם בקרים ניתנים להסרה, מסך OLED עוצר נשימה בגודל 8.8 אינץ’ ובקצב רענון 144Hz, וסוללה עוצמתית ליותר זמן משחק - זהו הכוח והגמישות במיטבם, לכל מקום שתרצו לשחק בו.",
-
+        category: 'laptop'
     }
 ];

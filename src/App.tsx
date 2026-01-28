@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import "./App.css";
+import "./assets/fonts/fonts.css";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import { getTheme } from "./components/Theme";
@@ -29,7 +30,7 @@ function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [fav, setFav] = useState<Item[]>([]);
 
-  const addToCart = (item: Item) => {
+  const addToCart = (item: Item,) => {
     setCart((prevCart) => {
       const isExist = prevCart.find((cartItem) => cartItem.id === item.id);
       if (isExist) {
@@ -45,8 +46,8 @@ function App() {
   };
   const toggleFav = (item: Item) => {
     setFav((prevArr) => {
-      const isExist = prevArr.find((favItem) => favItem.id === item.id);
-      if (isExist) {
+      const isFav = prevArr.find((favItem) => favItem.id === item.id);
+      if (isFav) {
         return prevArr.filter((favItem) => favItem.id !== item.id);
       }
       return [...prevArr, item];
