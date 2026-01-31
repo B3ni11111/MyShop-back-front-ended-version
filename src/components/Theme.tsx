@@ -28,18 +28,18 @@ export const getTheme = (mode: ThemeMode): Theme =>
       ...(mode === "dark"
         ? {
           primary: {
-            main: "#415a77",
+            main: "#c6ac8f",
           },
           secondary: {
-            main: "#778da9",
+            main: "#eae0d5",
           },
           background: {
-            default: "#415a77",
-            paper: "#1b263b",
+            default: "#eae0d5",
+            paper: "#5e503f",
           },
           text: {
             primary: "#e0e1dd",
-            secondary: "#778da9",
+            secondary: "#eae0d5",
           },
           custom: {
             dark: "#1b263b",
@@ -48,13 +48,13 @@ export const getTheme = (mode: ThemeMode): Theme =>
         }
         : {
           primary: {
-            main: "#415a77",
+            main: "#415aa7",
           },
           secondary: {
             main: "#778da9",
           },
           background: {
-            default: "#e0e1dd",
+            default: "#e0e5dd",
             paper: "#ffffff",
           },
           text: {

@@ -45,7 +45,7 @@ export default function CatItem({ i }: CatItemProps) {
 
     return (
         <>
-            <Link to={`/items-layout/${i.name}`}>
+            <Link to={`/items-layout/${i.name}`} style={{ textDecoration: 'none' }}>
 
                 <Card
                     sx={{

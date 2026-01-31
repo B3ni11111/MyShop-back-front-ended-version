@@ -17,6 +17,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Link } from 'react-router-dom';
 import logoImg from '../assets/imgs/logo.jpg';
 import ThemeToggle from './ThemeToggle';
+import theme from './Theme';
 
 const settings = ['Profile', 'Account', 'Logout'];
 
@@ -45,20 +46,11 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ mb: 1 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={'/'}>
-            <Box sx={{
-              width: 120,
-              height: 120,
-              objectFit: "contain",
-              display: { xs: "none", md: "flex" },
-              cursor: "pointer",
 
-            }}>
-              <img src={logoImg} alt="Logo" />
-            </Box>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

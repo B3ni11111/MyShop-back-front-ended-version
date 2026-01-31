@@ -1,18 +1,13 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
 import Grid from "@mui/material/Grid";
 import BetterItem from "./BetterItem";
 import { useParams } from "react-router-dom";
-
-import Card from "@mui/material/Card";
-import { Rowing } from "@mui/icons-material";
 import { useAppContext } from "../App";
+
 
 export default function ShopItems() {
   const { itemsData } = useAppContext();
-
   const { cat } = useParams<{ cat: string }>()
   const filteredItems = itemsData.filter(
     (i) => i.category === cat
@@ -20,9 +15,8 @@ export default function ShopItems() {
 
   return (
     <>
-      <Typography variant="h1">Shop</Typography>
-      <Box
 
+      <Box
         sx={{
           bgcolor: "background.default",
           p: 2,
@@ -31,7 +25,6 @@ export default function ShopItems() {
           mx: "auto",
         }}
       >
-
         <Grid container spacing={3}>
           {filteredItems.map((i) => (
             <Grid item key={i.id}>
@@ -39,10 +32,6 @@ export default function ShopItems() {
             </Grid>
           ))}
         </Grid>
-
-
-
-
       </Box>
     </>);
 }

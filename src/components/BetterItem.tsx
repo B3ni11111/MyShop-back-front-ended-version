@@ -27,13 +27,17 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "80%",
+  maxWidth: 900,
   bgcolor: theme.palette.background.paper,
   border: `2px solid ${theme.palette.secondary.main}`,
   boxShadow: 24,
   borderRadius: "20px",
   p: 4,
   color: theme.palette.text.primary,
+  display: "flex",
+  flexDirection: "row",
+  gap: 4,
 };
 
 export default function BetterItem({ i }: BetterItemProps) {
@@ -123,6 +127,7 @@ export default function BetterItem({ i }: BetterItemProps) {
                 <InfoIcon />
               </IconButton>
             </Tooltip>
+
           </Typography>
           <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}>
           </Box>
@@ -136,80 +141,92 @@ export default function BetterItem({ i }: BetterItemProps) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
-            <Typography
-              variant="h6"
-              sx={{
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                WebkitLineClamp: expandTitle ? "unset" : 2,
-                transition: "0.3s",
-                flexGrow: 1,
-              }}
-            >
-              {i.product}
-            </Typography>
 
-            <IconButton
-              size="small"
-              onClick={() => setExpandTitle((prev) => !prev)}
-              sx={{ color: "text.secondary", mt: "2px" }}
-            >
-              {expandTitle ? (
-                <KeyboardArrowUpIcon />
-              ) : (
-                <KeyboardArrowDownIcon />
-              )}
-            </IconButton>
+          <Box
+            sx={{
+              width: 250,
+              height: 250,
+              bgcolor: "#ffffff",
+              borderRadius: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <img
+              src={i.img}
+              alt={i.product}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+              }}
+            />
           </Box>
 
-          <Box sx={{ my: 9 }}>
-            <Box>
-              <img
-                src={i.img}
-                alt={i.product}
-                style={{
-                  maxWidth: "200px",
-                  maxHeight: "200px",
-                  width: "100%",
-                  height: "auto",
+          <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  WebkitLineClamp: expandTitle ? "unset" : 2,
+                  transition: "0.3s",
+                  flexGrow: 1,
                 }}
-              />
-              <Typography variant="body1" sx={{ mt: 2, mb: 2 }}>
-                {i.info}
-              </Typography>
-              <Typography variant="h6" sx={{ color: "text.secondary", mb: 2 }}>
-                ₪{i.price}
-              </Typography>
-              <Link to={`/item-page/${i.id}`}>
-                <Button variant="contained">
-                  go to page
-                </Button>
-              </Link>
-              <Box
-                onClick={(e) => e.stopPropagation()}
-                sx={{ mt: 2, display: "flex", gap: 2 }}
               >
-                <Button color="success" variant="contained">
-                  Buy Now!
-                </Button>
-                <Button
-                  onClick={() => addToCart(i)}
-                  variant="contained"
-                  sx={{ borderColor: "primary.main" }}
-                  endIcon={<AddShoppingCartIcon />}
-                >
-                  Add to cart
-                </Button>
-                <IconButton
-                  onClick={() => toggleFav(i)}
-                  sx={{ color: isFav ? "error.main" : "text.secondary" }}
-                >
-                  {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </IconButton>
-              </Box>
+                {i.product}
+              </Typography>
+
+              <IconButton
+                size="small"
+                onClick={() => setExpandTitle((prev) => !prev)}
+                sx={{ color: "text.secondary", mt: "2px" }}
+              >
+                {expandTitle ? (
+                  <KeyboardArrowUpIcon />
+                ) : (
+                  <KeyboardArrowDownIcon />
+                )}
+              </IconButton>
+            </Box>
+
+            <Typography variant="body1" sx={{ mt: 2, mb: 2 }}>
+              {i.info}
+            </Typography>
+            <Typography variant="h6" sx={{ color: "text.secondary", mb: 2 }}>
+              ₪{i.price}
+            </Typography>
+            <Link to={`/item-page/${i.id}`} style={{ textDecoration: "none" }}>
+              <Button variant="contained">
+                go to page
+              </Button>
+            </Link>
+            <Box
+              onClick={(e) => e.stopPropagation()}
+              sx={{ mt: 2, display: "flex", gap: 2 }}
+            >
+              <Button color="success" variant="contained">
+                Buy Now!
+              </Button>
+              <Button
+                onClick={() => addToCart(i)}
+                variant="contained"
+                sx={{ borderColor: "primary.main" }}
+                endIcon={<AddShoppingCartIcon />}
+              >
+                Add to cart
+              </Button>
+              <IconButton
+                onClick={() => toggleFav(i)}
+                sx={{ color: isFav ? "error.main" : "text.secondary" }}
+              >
+                {isFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
             </Box>
           </Box>
         </Box>

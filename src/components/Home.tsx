@@ -8,9 +8,7 @@ import { catData } from "../catData";
 export default function Home() {
     return (
         <>
-            <Typography variant="h1" sx={{ mb: 3 }}>
-                Shop
-            </Typography>
+
 
             <Box
                 sx={{
