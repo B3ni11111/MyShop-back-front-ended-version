@@ -114,7 +114,6 @@ export default function ItemPage() {
           </Box>
         </Grid>
 
-        {/* Info column */}
         <Grid size={{ xs: 12, md: 7 }}>
           <Box
             sx={{
@@ -123,7 +122,6 @@ export default function ItemPage() {
               gap: { xs: 1.5, md: 2 },
             }}
           >
-            {/* Brand placeholder */} 'hi Claude change apply here!'
             <Box
               sx={{
                 width: { xs: 80, md: 100 },
@@ -142,7 +140,6 @@ export default function ItemPage() {
                 BRAND
               </Typography>
             </Box>
-            {/* Product name */}
             <Typography
               variant="h5"
               sx={{
@@ -152,7 +149,6 @@ export default function ItemPage() {
             >
               {item.product}
             </Typography>
-            {/* Price */}
             <Typography
               variant="h4"
               sx={{
@@ -164,7 +160,6 @@ export default function ItemPage() {
               ₪{item.price}
             </Typography>
             <Divider />
-            {/* Description */}
             <Typography
               variant="body1"
               sx={{ color: "text.secondary", lineHeight: 1.7 }}
@@ -172,7 +167,6 @@ export default function ItemPage() {
               {item.info}
             </Typography>
             <Divider />
-            {/* Action buttons */}
             <Box
               sx={{
                 display: "flex",

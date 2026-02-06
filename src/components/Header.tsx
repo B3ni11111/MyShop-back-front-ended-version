@@ -43,11 +43,10 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   return (
-    <AppBar position="static" sx={{ mb: 1, bgcolor: "#172029" }}>
+    <AppBar position="sticky" sx={{ top: 0, mb: 10, bgcolor: "#172029", zIndex: 1100 }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ minHeight: { xs: 56, md: 60 } }}>
+        <Toolbar disableGutters sx={{ minHeight: { xs: 56, md: 60 }, position: "relative" }}>
           <Link to={"/"}>
             <img
               src={logo}
@@ -92,7 +91,9 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
               display: "flex",
               alignItems: "center",
               width: 400,
-              mx: "auto", // 🔥 זה הקסם
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
             }}
           >
             <InputBase
