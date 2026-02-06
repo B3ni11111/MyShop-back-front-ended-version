@@ -4,9 +4,11 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppContext } from "../App";
+import LaunchIcon from "@mui/icons-material/Launch";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQuantity } = useAppContext();
+  const { cart, removeFromCart, updateQuantity, resetCart } = useAppContext();
 
   const getTotalPrice = () => {
     return cart.reduce((total, i) => total + i.price * i.quantity, 0);
@@ -22,9 +24,20 @@ export default function Cart() {
 
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh", p: 2 }}>
-      <Typography variant="h3" sx={{ mb: 3 }}>
-        Shopping Cart
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: 3,
+        }}
+      >
+        <Typography variant="h3">Shopping Cart</Typography>
+        <Button onClick={resetCart} variant="contained" color="error">
+          Reset Cart
+        </Button>
+      </Box>
+
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {cart.map((i) => (
           <Card
@@ -56,6 +69,9 @@ export default function Cart() {
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}
               >
+                <IconButton component={Link} to={`/item-page/${i.id}`}>
+                  <LaunchIcon />
+                </IconButton>
                 <IconButton
                   size="small"
                   onClick={() => updateQuantity(i.id, i.quantity - 1)}
@@ -105,13 +121,11 @@ export default function Cart() {
           <Typography variant="h4">
             Total: ₪{getTotalPrice().toFixed(2)}
           </Typography>
-          <Button color="success" variant="contained"
-          >
+          <Button color="success" variant="contained">
             checkout
-
           </Button>
         </Box>
-      </Card >
-    </Box >
+      </Card>
+    </Box>
   );
 }

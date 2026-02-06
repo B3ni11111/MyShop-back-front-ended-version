@@ -1,38 +1,37 @@
-import { useState, MouseEvent } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Badge from '@mui/material/Badge';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Link } from 'react-router-dom';
-import logoImg from '../assets/imgs/logo.jpg';
-import ThemeToggle from './ThemeToggle';
-import theme from './Theme';
+import { useState, MouseEvent } from "react";
+import AppBar from "@mui/material/AppBar";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
 
-const settings = ['Profile', 'Account', 'Logout'];
+import SearchIcon from "@mui/icons-material/Search";
+
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import { Link } from "react-router-dom";
+
+import logo from "../assets/imgs/logo.jpg";
 
 interface HeaderProps {
   cartCount?: number;
-
 }
 
 export default function Header({ cartCount = 0 }: HeaderProps) {
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
 
-  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -46,80 +45,99 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
   };
 
   return (
-    <AppBar position="static" sx={{ mb: 1 }}>
+    <AppBar position="static" sx={{ mb: 1, bgcolor: "#172029" }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Link to={'/'}>
-
+        <Toolbar disableGutters sx={{ minHeight: { xs: 56, md: 60 } }}>
+          <Link to={"/"}>
+            <img
+              src={logo}
+              alt="Benny's Shop"
+              style={{ height: 48, width: "auto", display: "block" }}
+            />
           </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+          <Tooltip title="Home">
+            <Typography
+              component={Link}
+              to={"/"}
+              sx={{
+                textAlign: "center",
+                pl: 2,
+                textDecoration: "none",
+                color: "white",
+              }}
             >
-              <MenuIcon />
+              Home
+            </Typography>
+          </Tooltip>
+          <Tooltip title="About">
+            <Typography
+              component={Link}
+              to={"about"}
+              sx={{
+                textAlign: "center",
+                pl: 2,
+                textDecoration: "none",
+                color: "white",
+                mr: 1,
+              }}
+            >
+              About
+            </Typography>
+          </Tooltip>
+
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 400,
+              mx: "auto", // 🔥 זה הקסם
+            }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="עוד לא מוכן!!"
+              inputProps={{ "aria-label": "search google maps" }}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
             </IconButton>
+          </Paper>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
-
-
-
-            </Menu>
+              sx={{ display: { xs: "block", md: "none" } }}
+            ></Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
 
-
-          </Box>
-          <ThemeToggle />
           <Box
             sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 1 }}
           >
-            <Link to={'fav'}>
+            <Link to={"fav"}>
               <Tooltip title="Favorites">
                 <IconButton>
                   <FavoriteIcon sx={{ color: "white" }} />
                 </IconButton>
               </Tooltip>
             </Link>
-            <Link to={'cart'}>
+            <Link to={"cart"}>
               <Tooltip title="Shopping Cart">
                 <IconButton>
                   <Badge badgeContent={cartCount} color="error">
@@ -137,26 +155,35 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+              <Link to={"about"}>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      pl: 2,
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    Profile
+                  </Typography>
                 </MenuItem>
-              ))}
+              </Link>
             </Menu>
           </Box>
         </Toolbar>

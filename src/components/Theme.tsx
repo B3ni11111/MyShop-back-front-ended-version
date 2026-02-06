@@ -54,7 +54,7 @@ export const getTheme = (mode: ThemeMode): Theme =>
             main: "#778da9",
           },
           background: {
-            default: "#e0e5dd",
+            default: "#f5f5f5",
             paper: "#ffffff",
           },
           text: {

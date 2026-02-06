@@ -5,39 +5,46 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-
-import theme from "./Theme";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import CloseIcon from "@mui/icons-material/Close";
 import { useAppContext } from "../App";
 import { Link } from "react-router-dom";
-import InfoIcon from '@mui/icons-material/Info';
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import InfoIcon from "@mui/icons-material/Info";
 import Tooltip from "@mui/material/Tooltip";
-
 import type { BetterItemProps } from "../types/BetterItemProps";
-import { colors } from "@mui/material";
+import { Bolt } from "@mui/icons-material";
 
-const style = {
+const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "80%",
+  width: {
+    xs: "95%",
+    sm: "85%",
+    md: "70%",
+    lg: "60%",
+    xl: "50%",
+  },
   maxWidth: 900,
-  bgcolor: theme.palette.background.paper,
-  border: `2px solid ${theme.palette.secondary.main}`,
+  bgcolor: "background.paper",
+  border: 1,
+  borderColor: "secondary.main",
   boxShadow: 24,
   borderRadius: "20px",
-  p: 4,
-  color: theme.palette.text.primary,
+  p: { xs: 2, sm: 3, md: 4 },
+  color: "text.primary",
   display: "flex",
-  flexDirection: "row",
-  gap: 4,
+  flexDirection: { xs: "column", sm: "row" },
+  alignItems: { xs: "center", sm: "flex-start" },
+  gap: { xs: 2, sm: 3, md: 4 },
+  maxHeight: "90vh",
+  overflowY: "auto",
 };
 
 export default function BetterItem({ i }: BetterItemProps) {
@@ -53,11 +60,11 @@ export default function BetterItem({ i }: BetterItemProps) {
     <>
       <Card
         sx={{
-          borderRadius: "20px",
+          borderRadius: "5%",
           cursor: "pointer",
           width: "100%",
-          maxWidth: 280,
-          height: 360,
+          maxWidth: { xs: 200, sm: 240, md: 280 },
+          height: "100%",
           mx: "auto",
           "&:hover": { boxShadow: 6 },
         }}
@@ -74,11 +81,11 @@ export default function BetterItem({ i }: BetterItemProps) {
           <Box
             sx={{
               width: "100%",
-              height: "200px",
+              height: { xs: "140px", sm: "170px", md: "200px" },
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              mb: 2,
+              mb: 1,
               bgcolor: "#ffffff",
               borderRadius: 1,
             }}
@@ -88,7 +95,7 @@ export default function BetterItem({ i }: BetterItemProps) {
               alt={i.product}
               style={{
                 maxWidth: "100%",
-                maxHeight: "200px",
+                maxHeight: "100%",
                 width: "auto",
                 height: "auto",
                 objectFit: "contain",
@@ -112,25 +119,24 @@ export default function BetterItem({ i }: BetterItemProps) {
           </Typography>
           <Typography variant="body1" sx={{ mt: 1, mb: 1 }}>
             ₪{i.price}
-
             <span>
               <IconButton
-                onClick={() => addToCart(i)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(i);
+                }}
                 sx={{ color: "primary.main" }}
               >
                 <AddShoppingCartIcon />
               </IconButton>
-
             </span>
             <Tooltip title={i.info}>
-              <IconButton>
+              <IconButton onClick={(e) => e.stopPropagation()}>
                 <InfoIcon />
               </IconButton>
             </Tooltip>
-
           </Typography>
-          <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}>
-          </Box>
+          <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}></Box>
         </CardContent>
       </Card>
       {/* after press*/}
@@ -140,12 +146,24 @@ export default function BetterItem({ i }: BetterItemProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              color: "text.secondary",
+              zIndex: 1,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
 
           <Box
             sx={{
-              width: 250,
-              height: 250,
+              width: { xs: 180, sm: 200, md: 250 },
+              height: { xs: 180, sm: 200, md: 250 },
               bgcolor: "#ffffff",
               borderRadius: 2,
               display: "flex",
@@ -202,9 +220,7 @@ export default function BetterItem({ i }: BetterItemProps) {
               ₪{i.price}
             </Typography>
             <Link to={`/item-page/${i.id}`} style={{ textDecoration: "none" }}>
-              <Button variant="contained">
-                go to page
-              </Button>
+              <Button variant="contained">go to page</Button>
             </Link>
             <Box
               onClick={(e) => e.stopPropagation()}

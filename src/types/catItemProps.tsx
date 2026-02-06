@@ -1,5 +1,5 @@
-import { catItem } from "./catItem";
+import { CatItem, SubCategory } from "./catItem";
 
-export interface CatItemProps {
-    i: catItem
-}
+export type CatItemProps =
+    | { category: CatItem; isMainCategory: true; subCategory?: never; mainCategoryPath?: never }
+    | { subCategory: SubCategory; mainCategoryPath: string; isMainCategory: false; category?: never };
