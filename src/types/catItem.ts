@@ -15,6 +15,7 @@ export interface SubCategory {
     name: string;
     img: string;
     path: string;
+    brandImg: any
 }
 
 export interface CatItem {

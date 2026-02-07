@@ -1,13 +1,13 @@
-import Button from "@mui/material/Button";
-import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
+import React from "react";
+import { Box, Card, Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useAppContext } from "../App";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { Link } from "react-router-dom";
+import { useAppContext } from "../App";
 
-export default function Cart() {
+export default function ItemsCartList() {
   const { cart, removeFromCart, updateQuantity, resetCart } = useAppContext();
 
   const getTotalPrice = () => {
@@ -21,23 +21,8 @@ export default function Cart() {
       </Box>
     );
   }
-
   return (
-    <Box sx={{ bgcolor: "background.default", minHeight: "100vh", p: 2 }}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          mb: 3,
-        }}
-      >
-        <Typography variant="h3">Shopping Cart</Typography>
-        <Button onClick={resetCart} variant="contained" color="error">
-          Reset Cart
-        </Button>
-      </Box>
-
+    <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {cart.map((i) => (
           <Card
@@ -110,24 +95,6 @@ export default function Cart() {
           </Card>
         ))}
       </Box>
-      <Card sx={{ mt: 3, p: 3 }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4">
-            Total: ₪{getTotalPrice().toFixed(2)}
-          </Typography>
-          <Link to={"/checkout"}>
-            <Button color="success" variant="contained">
-              checkout
-            </Button>
-          </Link>
-        </Box>
-      </Card>
-    </Box>
+    </>
   );
 }

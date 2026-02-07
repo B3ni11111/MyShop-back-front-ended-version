@@ -14,12 +14,27 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { catData } from "../catData";
 
 export default function ItemPage() {
   const { itemsData, addToCart, toggleFav, fav } = useAppContext();
   const { id } = useParams<{ id: string }>();
 
   const item = itemsData?.find((i) => String(i.id) === id);
+
+  const getBrandBanner = () => {
+    if (!item) return null;
+
+    const mainCategory = catData.find((cat) => cat.main === item.category.main);
+
+    if (!mainCategory) return null;
+    const secondaryCategory = mainCategory.secondary.find(
+      (sec) => sec.path.toLowerCase() === item.category.secondary.toLowerCase(),
+    );
+
+    return secondaryCategory?.brandImg || null;
+  };
+  const brandBanner = getBrandBanner();
 
   if (!item) {
     return (
@@ -133,12 +148,17 @@ export default function ItemPage() {
                 justifyContent: "center",
               }}
             >
-              <Typography
-                variant="caption"
-                sx={{ fontStyle: "italic", color: "text.disabled" }}
-              >
-                BRAND
-              </Typography>
+              {brandBanner && (
+                <img
+                  src={brandBanner}
+                  alt="Brand banner"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              )}
             </Box>
             <Typography
               variant="h5"

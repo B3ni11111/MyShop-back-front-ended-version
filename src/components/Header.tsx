@@ -6,22 +6,13 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-
-import SearchIcon from "@mui/icons-material/Search";
-
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
 import { Link } from "react-router-dom";
-
 import logo from "../assets/imgs/logo.jpg";
 
 interface HeaderProps {
@@ -44,9 +35,15 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
     setAnchorElUser(null);
   };
   return (
-    <AppBar position="sticky" sx={{ top: 0, mb: 10, bgcolor: "#172029", zIndex: 1100 }}>
+    <AppBar
+      position="sticky"
+      sx={{ top: 0, mb: 1, bgcolor: "#172029", zIndex: 1100 }}
+    >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ minHeight: { xs: 56, md: 60 }, position: "relative" }}>
+        <Toolbar
+          disableGutters
+          sx={{ minHeight: { xs: 56, md: 60 }, position: "relative" }}
+        >
           <Link to={"/"}>
             <img
               src={logo}
@@ -83,29 +80,6 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
               About
             </Typography>
           </Tooltip>
-
-          <Paper
-            component="form"
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 400,
-              position: "absolute",
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="עוד לא מוכן!!"
-              inputProps={{ "aria-label": "search google maps" }}
-            />
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <SearchIcon />
-            </IconButton>
-          </Paper>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <Menu
@@ -171,7 +145,7 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <Link to={"about"}>
+              <Link to={"account/profile"}>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography
                     sx={{
@@ -182,6 +156,48 @@ export default function Header({ cartCount = 0 }: HeaderProps) {
                     }}
                   >
                     Profile
+                  </Typography>
+                </MenuItem>
+              </Link>
+              <Link to={"account/orders"}>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      pl: 2,
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    Your Orders
+                  </Typography>
+                </MenuItem>
+              </Link>
+              <Link to={"account/info"}>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      pl: 2,
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    Account Center
+                  </Typography>
+                </MenuItem>
+              </Link>
+              <Link to={"account/settings"}>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      pl: 2,
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    Settings & preferences
                   </Typography>
                 </MenuItem>
               </Link>

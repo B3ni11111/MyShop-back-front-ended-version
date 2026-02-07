@@ -11,6 +11,7 @@ import Fav from "./components/Fav";
 import Home from "./components/Home";
 import SubCat from "./components/SubCat";
 import NotFound from "./components/NotFound";
+import Checkout from "./components/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -18,12 +19,14 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <Home /> },
-      { path: "/:mainCat", element: <SubCat /> },
+      { path: ":mainCat", element: <SubCat /> },
       { path: "/:mainCat/:subCat", element: <ShopItems /> },
       { path: "item-page/:id", element: <ItemPage /> },
       { path: "cart", element: <Cart /> },
       { path: "about", element: <About /> },
       { path: "fav", element: <Fav /> },
+      { path: "checkout", element: <Checkout /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
