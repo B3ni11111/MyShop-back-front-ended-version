@@ -1,9 +1,11 @@
 # TypeScript Migration Plan
 
 ## Overview
+
 Convert the React Shop application from JavaScript to TypeScript for better type safety, IDE support, and maintainability.
 
 ## Current State
+
 - ✅ TypeScript already installed (v5.9.3)
 - ✅ @types/react and @types/react-dom installed
 - ✅ Vite with React plugin configured
@@ -12,6 +14,7 @@ Convert the React Shop application from JavaScript to TypeScript for better type
 ## Migration Strategy
 
 ### Phase 1: Configuration & Type Definitions
+
 1. **Create `tsconfig.json`**
    - Configure for React + Vite
    - Enable strict mode for better type safety
@@ -30,6 +33,7 @@ Convert the React Shop application from JavaScript to TypeScript for better type
 4. **Convert `vite.config.js` → `vite.config.ts`**
 
 ### Phase 2: Core Files (Bottom-Up Approach)
+
 1. **Data & Hooks** (no dependencies on components)
    - `itemsData.js` → `itemsData.ts`
    - `hooks/useThemePreference.js` → `useThemePreference.ts`
@@ -38,6 +42,7 @@ Convert the React Shop application from JavaScript to TypeScript for better type
    - `components/Theme.jsx` → `Theme.tsx`
 
 ### Phase 3: Components (Dependency Order)
+
 1. **Leaf Components** (no child component dependencies)
    - `Fav.jsx` → `Fav.tsx` (if still used)
    - `Button.jsx` → `Button.tsx` (if still used)
@@ -61,6 +66,7 @@ Convert the React Shop application from JavaScript to TypeScript for better type
 ## Type Definitions Needed
 
 ### Item Interface
+
 ```typescript
 interface Item {
   id: number;
@@ -72,6 +78,7 @@ interface Item {
 ```
 
 ### CartItem Interface
+
 ```typescript
 interface CartItem extends Item {
   quantity: number;
@@ -79,10 +86,11 @@ interface CartItem extends Item {
 ```
 
 ### AppContextType Interface
+
 ```typescript
 interface AppContextType {
   itemsData: Item[];
-  mode: 'light' | 'dark';
+  mode: "light" | "dark";
   toggleTheme: () => void;
   cart: CartItem[];
   addToCart: (item: Item) => void;
@@ -93,26 +101,31 @@ interface AppContextType {
 ```
 
 ### ThemeMode Type
+
 ```typescript
-type ThemeMode = 'light' | 'dark';
+type ThemeMode = "light" | "dark";
 ```
 
 ## File Conversion Checklist
 
 ### Configuration Files
+
 - [ ] `tsconfig.json` - Create
 - [ ] `vite.config.ts` - Convert from .js
 - [ ] `vite-env.d.ts` - Create
 - [ ] `index.html` - Update script reference
 
 ### Type Definitions
+
 - [ ] `src/types.ts` - Create
 
 ### Data & Hooks
+
 - [ ] `src/itemsData.js` → `itemsData.ts`
 - [ ] `src/hooks/useThemePreference.js` → `useThemePreference.ts`
 
 ### Components
+
 - [ ] `src/components/Theme.jsx` → `Theme.tsx`
 - [ ] `src/App.jsx` → `App.tsx`
 - [ ] `src/main.jsx` → `main.tsx`
@@ -125,6 +138,7 @@ type ThemeMode = 'light' | 'dark';
 - [ ] `src/components/ThemeToggle.jsx` → `ThemeToggle.tsx`
 
 ### Optional (if still used)
+
 - [ ] `src/Fav.jsx` → `Fav.tsx`
 - [ ] `src/Button.jsx` → `Button.tsx`
 
@@ -145,6 +159,7 @@ type ThemeMode = 'light' | 'dark';
 5. Ensure no runtime errors
 
 ## Estimated Files to Convert
+
 - **Configuration**: 4 files
 - **Type Definitions**: 1 file
 - **Data/Hooks**: 2 files
@@ -152,6 +167,7 @@ type ThemeMode = 'light' | 'dark';
 - **Total**: ~17 files
 
 ## Benefits After Migration
+
 - ✅ Type safety at compile time
 - ✅ Better IDE autocomplete and IntelliSense
 - ✅ Easier refactoring

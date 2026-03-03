@@ -1,20 +1,47 @@
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Typography, Breadcrumbs } from "@mui/material";
+import { Typography, Breadcrumbs, CircularProgress } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useParams, Link } from "react-router-dom";
-import CatItem from "./CatItem";
-import { catData } from "../catData";
+import CategoryCard from "./CategoryCard";
 import NotFound from "./NotFound";
+import type { itemsDataInterface } from "../types/itemsDataInterface";
 
 export default function SubCategory() {
   const { mainCat } = useParams<{ mainCat: string }>();
+  const [data, setData] = useState<itemsDataInterface[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const mainCategory = catData.find((cat) => cat.path === mainCat);
+  useEffect(() => {
+    fetch("http://localhost:3000/api/items/full")
+      .then((res) => res.json())
+      .then((data) => setData(data))
+      .finally(() => setLoading(false));
+  }, []);
 
-  if (!mainCategory) {
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  const categoryEntry = data.find((entry) => entry.category.path === mainCat);
+
+  if (!categoryEntry) {
     return <NotFound />;
   }
+
+  const { category } = categoryEntry;
 
   return (
     <Box
@@ -41,29 +68,24 @@ export default function SubCategory() {
         >
           Home
         </Typography>
-        <Typography color="text.primary">{mainCategory.main}</Typography>
+        <Typography color="text.primary">{category.categoryName}</Typography>
       </Breadcrumbs>
 
       <Typography variant="h4" sx={{ mb: 3 }}>
-        {mainCategory.main}
+        {category.categoryName}
       </Typography>
 
       <Grid container spacing={1.5} justifyContent="center">
-        {mainCategory.secondary.map((sub) => (
+        {category.subCategory.map((sub) => (
           <Grid
             key={sub.path}
-            item
-            xs={6}
-            sm={6}
-            md={4}
-            lg={3}
-            xl={3}
+            size={{ xs: 6, sm: 6, md: 4, lg: 3, xl: 3 }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <CatItem
-              subCategory={sub}
-              mainCategoryPath={mainCategory.path}
-              isMainCategory={false}
+            <CategoryCard
+              name={sub.name}
+              img={sub.img}
+              link={`/shop/${category.path}/${sub.path}`}
             />
           </Grid>
         ))}

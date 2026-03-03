@@ -1,14 +1,7 @@
-export interface Item {
-    id: number | string;
-    product: string;
-    price: number;
-    category: {
-    
-        main: string,
-        secondary: string,
-        brand: string
-    
-    };
-    img: string;
-    info: string;
-  }
+export interface oneItemInterface {
+  id: number | string;
+  product: string;
+  price: number;
+  img: string;
+  info: string;
+}

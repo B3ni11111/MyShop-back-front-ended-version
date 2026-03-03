@@ -1,6 +1,5 @@
-import type { Item } from "./item";
+import type { oneItemInterface } from "./item";
 import type { CartItem } from "./cartItem";
-
 
 export type ThemeMode = "light" | "dark";
 
@@ -10,20 +9,19 @@ export interface ThemePreference {
 }
 
 export interface AppContextType {
-  fav: Item[];
+  fav: oneItemInterface[];
   mode: ThemeMode;
   cart: CartItem[];
   sort: SortOption;
-  itemsData: Item[];
-  resetCart: () => void
+  itemsData: oneItemInterface[];
+  resetCart: () => void;
   toggleTheme: () => void;
   getTotalItems: () => number;
-  addToCart: (item: Item) => void;
-  toggleFav: (item: Item) => void;
+  addToCart: (item: oneItemInterface) => void;
+  toggleFav: (item: oneItemInterface) => void;
   setSort: (sort: SortOption) => void;
   removeFromCart: (itemId: number | string) => void;
   updateQuantity: (id: number | string, newQ: number) => void;
 }
-
 
 export type SortOption = "default" | "lowToHigh" | "highToLow" | "recommended";

@@ -1,29 +1,64 @@
+import { useState, useEffect, useMemo } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Typography, Breadcrumbs } from "@mui/material";
+import { Typography, Breadcrumbs, CircularProgress } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import BetterItem from "./BetterItem";
 import { useParams, Link } from "react-router-dom";
 import { useAppContext } from "../App";
 import Sorted from "./SortMui";
-import { catData } from "../catData";
+import type { itemsDataInterface } from "../types/itemsDataInterface";
 
 export default function ShopItems() {
-  const { itemsData } = useAppContext();
+  const { sort } = useAppContext();
   const { mainCat, subCat } = useParams<{ mainCat: string; subCat: string }>();
+  const [data, setData] = useState<itemsDataInterface[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const mainCategory = catData.find((cat) => cat.path === mainCat);
-  const subCategory = mainCategory?.secondary.find(
-    (sub) => sub.path === subCat,
+  useEffect(() => {
+    fetch("http://localhost:3000/api/items/full")
+      .then((res) => res.json())
+      .then((data) => setData(data))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const categoryEntry = data.find((entry) => entry.category.path === mainCat);
+  const subCategory = categoryEntry?.category.subCategory.find(
+    (sub) => sub.path.toLowerCase() === subCat?.toLowerCase(),
   );
 
   const isAll = subCat?.toLowerCase() === "all";
-  const filteredItems = itemsData.filter(
-    (item) =>
-      item.category.main.toLowerCase() === mainCat?.toLowerCase() &&
-      (isAll ||
-        item.category.secondary.toLowerCase() === subCat?.toLowerCase()),
-  );
+
+  const filteredItems = useMemo(() => {
+    if (!categoryEntry) return [];
+
+    let items = isAll
+      ? categoryEntry.category.subCategory.flatMap((sub) => sub.items)
+      : subCategory?.items || [];
+
+    if (sort === "lowToHigh") {
+      items = [...items].sort((a, b) => a.price - b.price);
+    } else if (sort === "highToLow") {
+      items = [...items].sort((a, b) => b.price - a.price);
+    }
+
+    return items;
+  }, [categoryEntry, subCategory, isAll, sort]);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -52,14 +87,14 @@ export default function ShopItems() {
         </Typography>
         <Typography
           component={Link}
-          to={`/${mainCat}`}
+          to={`/shop/${mainCat}`}
           sx={{
             textDecoration: "none",
             color: "text.secondary",
             "&:hover": { color: "text.primary" },
           }}
         >
-          {mainCategory?.main}
+          {categoryEntry?.category.categoryName}
         </Typography>
         <Typography color="text.primary">
           {isAll ? "All" : subCategory?.name}
@@ -84,12 +119,7 @@ export default function ShopItems() {
         {filteredItems.map((item) => (
           <Grid
             key={item.id}
-            item
-            xs={6}
-            sm={6}
-            md={4}
-            lg={3}
-            xl={3}
+            size={{ xs: 6, sm: 6, md: 4, lg: 3, xl: 3 }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <BetterItem i={item} />

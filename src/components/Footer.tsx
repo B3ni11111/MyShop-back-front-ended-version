@@ -4,7 +4,7 @@ import XIcon from "@mui/icons-material/X";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
@@ -16,12 +16,8 @@ type Inputs = {
 export default function Footer() {
   const {
     register,
-    handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-  console.log(watch("Email"));
 
   return (
     <Box
@@ -116,8 +112,6 @@ export default function Footer() {
                 required
                 {...register("PhoneNum", { required: true })}
               />
-
-              {/* include validation with required or other standard HTML validation rules */}
 
               {errors.PhoneNum && <span>This field is required</span>}
 

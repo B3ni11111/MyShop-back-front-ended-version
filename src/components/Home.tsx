@@ -1,10 +1,42 @@
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import CatItem from "./CatItem";
-import { catData } from "../catData";
-import { Tooltip, Typography } from "@mui/material";
+import CategoryCard from "./CategoryCard";
+import { Link } from "react-router-dom";
+import { Typography, Button, CircularProgress } from "@mui/material";
+import BetterItem from "./BetterItem";
+import type { itemsDataInterface } from "../types/itemsDataInterface";
 
 export default function Home() {
+  const [data, setData] = useState<itemsDataInterface[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/items/full")
+      .then((res) => res.json())
+      .then((data) => setData(data))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const allItems = data.flatMap((entry) =>
+    entry.category.subCategory.flatMap((sub) => sub.items),
+  );
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -18,19 +50,45 @@ export default function Home() {
       <Typography variant="h4" sx={{ mb: 3 }}>
         Welcome
       </Typography>
-      <Grid container spacing={1.5} justifyContent="center">
-        {catData.map((category) => (
+
+      {/* Categories Section */}
+      <Typography variant="h5" sx={{ mb: 2 }}>
+        Categories
+      </Typography>
+      <Grid container spacing={1.5} justifyContent="center" sx={{ mb: 4 }}>
+        {data.map((entry) => (
           <Grid
-            key={category.main}
-            item
-            xs={6}
-            sm={6}
-            md={4}
-            lg={3}
-            xl={3}
+            key={entry.category.categoryName}
+            size={{ xs: 4, sm: 4, md: 3, lg: 2 }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <CatItem category={category} isMainCategory={true} />
+            <CategoryCard
+              name={entry.category.categoryName}
+              img={entry.category.categoryImg}
+              link={`shop/${entry.category.path}`}
+              compact
+            />
+          </Grid>
+        ))}
+      </Grid>
+
+      {/* All Products Section */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+        <Typography variant="h5">Products</Typography>
+        <Link to={"shop/all-items"} style={{ textDecoration: "none" }}>
+          <Button variant="outlined" size="small">
+            View All
+          </Button>
+        </Link>
+      </Box>
+      <Grid container spacing={1} justifyContent="center">
+        {allItems.map((item) => (
+          <Grid
+            key={item.id}
+            size={{ xs: 4, sm: 3, md: 2, lg: 2 }}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <BetterItem i={item} />
           </Grid>
         ))}
       </Grid>

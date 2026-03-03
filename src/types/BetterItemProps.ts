@@ -1,5 +1,6 @@
-import type { Item } from "./item";
+import type { oneItemInterface } from "./item";
 
 export interface BetterItemProps {
-    i: Item;
+    i: oneItemInterface;
+    compact?: boolean;
 }

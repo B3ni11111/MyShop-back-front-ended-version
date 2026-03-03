@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node playwright-review.mjs:*)"
+      "Bash(node playwright-review.mjs:*)",
+      "Bash(npm run start:dev:*)",
+      "Bash(curl:*)",
+      "WebFetch(domain:www.payngo.co.il)"
     ]
   }
 }

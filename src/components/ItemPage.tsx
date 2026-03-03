@@ -1,4 +1,10 @@
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import type { oneItemInterface } from "../types/item";
 import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useAppContext } from "../App";
 import {
   Container,
@@ -9,38 +15,53 @@ import {
   IconButton,
   Divider,
   Breadcrumbs,
+  CircularProgress,
 } from "@mui/material";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { catData } from "../catData";
+
+interface ItemWithContext extends oneItemInterface {
+  brandBanner: string;
+  categoryName: string;
+  categoryPath: string;
+}
 
 export default function ItemPage() {
-  const { itemsData, addToCart, toggleFav, fav } = useAppContext();
+  const { addToCart, toggleFav, fav } = useAppContext();
   const { id } = useParams<{ id: string }>();
 
-  const item = itemsData?.find((i) => String(i.id) === id);
+  const [item, setItem] = useState<ItemWithContext | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const getBrandBanner = () => {
-    if (!item) return null;
+  useEffect(() => {
+    if (!id) return;
 
-    const mainCategory = catData.find((cat) => cat.main === item.category.main);
+    setLoading(true);
+    fetch(`http://localhost:3000/api/items/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Item not found");
+        return res.json();
+      })
+      .then((data) => {
+        setItem(data);
+        setError(null);
+      })
+      .catch((err) => setError("faild to fetch from server"))
+      .finally(() => setLoading(false));
+  }, [id]);
 
-    if (!mainCategory) return null;
-    const secondaryCategory = mainCategory.secondary.find(
-      (sec) => sec.path.toLowerCase() === item.category.secondary.toLowerCase(),
+  if (loading) {
+    return (
+      <Container maxWidth="sm" sx={{ textAlign: "center", py: 10 }}>
+        <CircularProgress />
+      </Container>
     );
+  }
 
-    return secondaryCategory?.brandImg || null;
-  };
-  const brandBanner = getBrandBanner();
-
-  if (!item) {
+  if (error || !item) {
     return (
       <Container maxWidth="sm" sx={{ textAlign: "center", py: 10 }}>
         <Typography variant="h5" gutterBottom>
-          Item not found
+          {error || "Item not found"}
         </Typography>
         <Button component={Link} to="/" variant="contained">
           Back to Home
@@ -70,14 +91,14 @@ export default function ItemPage() {
         </Typography>
         <Typography
           component={Link}
-          to={`/items-layout/${item.category}`}
+          to={`/shop/${item.categoryPath}`}
           sx={{
             textDecoration: "none",
             color: "text.secondary",
             "&:hover": { color: "text.primary" },
           }}
         >
-          {item.category.main}
+          {item.categoryName}
         </Typography>
         <Typography
           color="text.primary"
@@ -141,16 +162,16 @@ export default function ItemPage() {
               sx={{
                 width: { xs: 80, md: 100 },
                 height: { xs: 30, md: 40 },
-                bgcolor: "action.hover",
+                bgcolor: "white",
                 borderRadius: 1,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              {brandBanner && (
+              {item.brandBanner && (
                 <img
-                  src={brandBanner}
+                  src={item.brandBanner}
                   alt="Brand banner"
                   style={{
                     width: "100%",

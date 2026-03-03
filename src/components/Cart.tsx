@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
+import { Box, Card, Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";

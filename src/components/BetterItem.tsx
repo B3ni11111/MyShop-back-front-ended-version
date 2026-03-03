@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 import Tooltip from "@mui/material/Tooltip";
 import type { BetterItemProps } from "../types/BetterItemProps";
-import { Bolt } from "@mui/icons-material";
 
 const modalStyle = {
   position: "absolute",
@@ -47,7 +46,7 @@ const modalStyle = {
   overflowY: "auto",
 };
 
-export default function BetterItem({ i }: BetterItemProps) {
+export default function BetterItem({ i, compact = false }: BetterItemProps) {
   const { addToCart, fav, toggleFav } = useAppContext();
   const isFav = fav.some((item) => item.id === i.id);
 
@@ -63,7 +62,9 @@ export default function BetterItem({ i }: BetterItemProps) {
           borderRadius: "5%",
           cursor: "pointer",
           width: "100%",
-          maxWidth: { xs: 200, sm: 240, md: 280 },
+          maxWidth: compact
+            ? { xs: 100, sm: 120, md: 140 }
+            : { xs: 200, sm: 240, md: 280 },
           height: "100%",
           mx: "auto",
           "&:hover": { boxShadow: 6 },
@@ -75,17 +76,18 @@ export default function BetterItem({ i }: BetterItemProps) {
             flexGrow: 1,
             display: "flex",
             flexDirection: "column",
-            p: 2,
           }}
         >
           <Box
             sx={{
               width: "100%",
-              height: { xs: "140px", sm: "170px", md: "200px" },
+              height: compact
+                ? { xs: "60px", sm: "80px", md: "100px" }
+                : { xs: "140px", sm: "170px", md: "200px" },
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              mb: 1,
+              mb: compact ? 0.5 : 1,
               bgcolor: "#ffffff",
               borderRadius: 1,
             }}
@@ -103,38 +105,46 @@ export default function BetterItem({ i }: BetterItemProps) {
             />
           </Box>
           <Typography
-            variant="h6"
+            variant={compact ? "body2" : "h6"}
             sx={{
-              mt: 1,
-              minHeight: "3em",
+              mt: compact ? 0.5 : 1,
+              minHeight: compact ? "2.5em" : "3em",
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
               textOverflow: "ellipsis",
               wordWrap: "break-word",
+              fontWeight: compact ? 500 : undefined,
             }}
           >
             {i.product}
           </Typography>
-          <Typography variant="body1" sx={{ mt: 1, mb: 1 }}>
+          <Typography
+            variant={compact ? "body2" : "body1"}
+            sx={{ mt: compact ? 0.5 : 1, mb: compact ? 0.5 : 1 }}
+          >
             ₪{i.price}
-            <span>
-              <IconButton
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToCart(i);
-                }}
-                sx={{ color: "primary.main" }}
-              >
-                <AddShoppingCartIcon />
-              </IconButton>
-            </span>
-            <Tooltip title={i.info}>
-              <IconButton onClick={(e) => e.stopPropagation()}>
-                <InfoIcon />
-              </IconButton>
-            </Tooltip>
+            {!compact && (
+              <>
+                <span>
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(i);
+                    }}
+                    sx={{ color: "primary.main" }}
+                  >
+                    <AddShoppingCartIcon />
+                  </IconButton>
+                </span>
+                <Tooltip title={i.info}>
+                  <IconButton onClick={(e) => e.stopPropagation()}>
+                    <InfoIcon />
+                  </IconButton>
+                </Tooltip>
+              </>
+            )}
           </Typography>
           <Box onClick={(e) => e.stopPropagation()} sx={{ mt: "auto" }}></Box>
         </CardContent>

@@ -1,5 +1,5 @@
-import type { Item } from "./item";
+import type { oneItemInterface } from "./item";
 
-export type CartItem = Item & {
+export type CartItem = oneItemInterface & {
     quantity: number;
 };

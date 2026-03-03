@@ -1,19 +1,18 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, createContext, useContext } from "react";
 import "./App.css";
 import "./assets/fonts/fonts.css";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline } from "@mui/material";
 import { getTheme } from "./components/Theme";
 import useThemePreference from "./hooks/useThemePreference";
-import { itemsData } from "./itemsData";
-import { createContext, useState, useContext, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import type { AppContextType } from "./types/appContext";
-import type { Item } from "./types/item";
+import type { oneItemInterface } from "./types/item";
 import type { CartItem } from "./types/cartItem";
 import { SortOption } from "./types/appContext";
+import { itemsData as staticItemsData } from "./itemsData";
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -25,18 +24,22 @@ export function useAppContext(): AppContextType {
   return context;
 }
 
+const flattenedItems: oneItemInterface[] = staticItemsData.flatMap((entry) =>
+  entry.category.subCategory.flatMap((sub) => sub.items)
+);
+
 function App() {
   const [cart, setCart] = useState<CartItem[]>(() => {
     const saved = localStorage.getItem("cart");
     return saved ? JSON.parse(saved) : [];
   });
-  const [fav, setFav] = useState<Item[]>(() => {
+  const [fav, setFav] = useState<oneItemInterface[]>(() => {
     const saved = localStorage.getItem("fav");
     return saved ? JSON.parse(saved) : [];
   });
   const [sort, setSort] = useState<SortOption>("recommended");
 
-  const addToCart = (item: Item) => {
+  const addToCart = (item: oneItemInterface) => {
     setCart((prevCart) => {
       const isExist = prevCart.find((cartItem) => cartItem.id === item.id);
       if (isExist) {
@@ -50,7 +53,7 @@ function App() {
     });
     console.log(cart);
   };
-  const toggleFav = (item: Item) => {
+  const toggleFav = (item: oneItemInterface) => {
     setFav((prevArr) => {
       const isFav = prevArr.find((favItem) => favItem.id === item.id);
       if (isFav) {
@@ -86,18 +89,18 @@ function App() {
 
   const sortedItems = useMemo(() => {
     if (sort === "recommended") {
-      return itemsData;
+      return flattenedItems;
     }
 
     if (sort === "lowToHigh") {
-      return [...itemsData].sort((a, b) => a.price - b.price);
+      return [...flattenedItems].sort((a, b) => a.price - b.price);
     }
 
     if (sort === "highToLow") {
-      return [...itemsData].sort((a, b) => b.price - a.price);
+      return [...flattenedItems].sort((a, b) => b.price - a.price);
     }
 
-    return itemsData;
+    return flattenedItems;
   }, [sort]);
 
   useEffect(() => {
