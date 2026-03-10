@@ -3,8 +3,7 @@ import "./App.css";
 import "./assets/fonts/fonts.css";
 import { ThemeProvider } from "@emotion/react";
 import { Box, CssBaseline } from "@mui/material";
-import { getTheme } from "./components/Theme";
-import useThemePreference from "./hooks/useThemePreference";
+import theme from "./components/Theme";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -111,15 +110,10 @@ function App() {
     localStorage.setItem("fav", JSON.stringify(fav));
   }, [fav]);
 
-  const { mode, toggleTheme } = useThemePreference();
-  const theme = useMemo(() => getTheme(mode), [mode]);
-
   const appData: AppContextType = {
     itemsData: sortedItems,
     sort,
     setSort,
-    mode,
-    toggleTheme,
     cart,
     fav,
     addToCart,
