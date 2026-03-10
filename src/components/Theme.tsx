@@ -27,45 +27,45 @@ export const getTheme = (mode: ThemeMode): Theme =>
       mode,
       ...(mode === "dark"
         ? {
-          primary: {
-            main: "#c6ac8f",
-          },
-          secondary: {
-            main: "#eae0d5",
-          },
-          background: {
-            default: "#eae0d5",
-            paper: "#5e503f",
-          },
-          text: {
-            primary: "#e0e1dd",
-            secondary: "#eae0d5",
-          },
-          custom: {
-            dark: "#1b263b",
-            veryDark: "#0d1b2a",
-          },
-        }
+            primary: {
+              main: "#c6ac8f",
+            },
+            secondary: {
+              main: "#eae0d5",
+            },
+            background: {
+              default: "#5e503f",
+              paper: "#5e503f",
+            },
+            text: {
+              primary: "#e0e1dd",
+              secondary: "#eae0d5",
+            },
+            custom: {
+              dark: "#1b263b",
+              veryDark: "#0d1b2a",
+            },
+          }
         : {
-          primary: {
-            main: "#415aa7",
-          },
-          secondary: {
-            main: "#778da9",
-          },
-          background: {
-            default: "#f5f5f5",
-            paper: "#ffffff",
-          },
-          text: {
-            primary: "#1b263b",
-            secondary: "#415a77",
-          },
-          custom: {
-            dark: "#778da9",
-            veryDark: "#415a77",
-          },
-        }),
+            primary: {
+              main: "#415aa7",
+            },
+            secondary: {
+              main: "#778da9",
+            },
+            background: {
+              default: "#f5f5f5",
+              paper: "#ffffff",
+            },
+            text: {
+              primary: "#1b263b",
+              secondary: "#415a77",
+            },
+            custom: {
+              dark: "#778da9",
+              veryDark: "#415a77",
+            },
+          }),
     },
   });
 
