@@ -8,6 +8,7 @@ import { useParams, Link } from "react-router-dom";
 import { useAppContext } from "../App";
 import Sorted from "./SortMui";
 import type { itemsDataInterface } from "../types/itemsDataInterface";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function ShopItems() {
   const { sort } = useAppContext();
@@ -16,7 +17,7 @@ export default function ShopItems() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/items/full")
+    fetch(API_ENDPOINTS.itemsFull)
       .then((res) => res.json())
       .then((data) => setData(data))
       .finally(() => setLoading(false));

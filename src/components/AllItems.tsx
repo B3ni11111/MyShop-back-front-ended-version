@@ -6,6 +6,7 @@ import BetterItem from "./BetterItem";
 import { useAppContext } from "../App";
 import Sorted from "./SortMui";
 import type { oneItemInterface } from "../types/item";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function AllItems() {
   const { sort } = useAppContext();
@@ -13,7 +14,7 @@ export default function AllItems() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/items")
+    fetch(API_ENDPOINTS.items)
       .then((res) => res.json())
       .then((data) => setItems(data))
       .finally(() => setLoading(false));

@@ -7,6 +7,7 @@ import { useParams, Link } from "react-router-dom";
 import CategoryCard from "./CategoryCard";
 import NotFound from "./NotFound";
 import type { itemsDataInterface } from "../types/itemsDataInterface";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function SubCategory() {
   const { mainCat } = useParams<{ mainCat: string }>();
@@ -14,7 +15,7 @@ export default function SubCategory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/items/full")
+    fetch(API_ENDPOINTS.itemsFull)
       .then((res) => res.json())
       .then((data) => setData(data))
       .finally(() => setLoading(false));

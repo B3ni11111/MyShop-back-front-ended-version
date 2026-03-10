@@ -6,6 +6,7 @@ import type { oneItemInterface } from "../types/item";
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../App";
+import { API_ENDPOINTS } from "../config/api";
 import {
   Container,
   Box,
@@ -36,7 +37,7 @@ export default function ItemPage() {
     if (!id) return;
 
     setLoading(true);
-    fetch(`http://localhost:3000/api/items/${id}`)
+    fetch(API_ENDPOINTS.itemById(id))
       .then((res) => {
         if (!res.ok) throw new Error("Item not found");
         return res.json();
@@ -45,7 +46,7 @@ export default function ItemPage() {
         setItem(data);
         setError(null);
       })
-      .catch((err) => setError("faild to fetch from server"))
+      .catch(() => setError("Failed to fetch from server"))
       .finally(() => setLoading(false));
   }, [id]);
 

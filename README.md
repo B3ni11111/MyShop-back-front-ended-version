@@ -1,16 +1,122 @@
-# React + Vite
+# MyShop - React E-commerce Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based e-commerce frontend built with Material-UI, connecting to a NestJS backend API.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19
+- TypeScript
+- Material-UI (MUI)
+- React Router DOM
+- Vite
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Browse products by category
+- View product details
+- Add items to cart
+- Favorites list
+- Dark/Light theme toggle
+- Responsive design
 
-## Expanding the ESLint configuration
+## API Backend
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This frontend connects to a NestJS backend hosted on Render:
+- **Production API:** https://myshop-server-0mz8.onrender.com
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/B3ni11111/MyShop-react.git
+   cd MyShop-react
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. (Optional) Create a `.env` file for custom API URL:
+   ```bash
+   cp .env.example .env
+   ```
+   Edit `.env` if you want to use a different API URL.
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open http://localhost:5173 in your browser.
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+The built files will be in the `dist` folder.
+
+## Deploy to Vercel
+
+### Option 1: Deploy via Vercel Dashboard
+
+1. Go to [vercel.com](https://vercel.com) and sign in
+2. Click "New Project"
+3. Import your GitHub repository: `B3ni11111/MyShop-react`
+4. Vercel will auto-detect Vite settings
+5. Click "Deploy"
+
+### Option 2: Deploy via Vercel CLI
+
+1. Install Vercel CLI:
+   ```bash
+   npm install -g vercel
+   ```
+
+2. Run deployment:
+   ```bash
+   vercel
+   ```
+
+3. Follow the prompts to link your project
+
+### Environment Variables (Optional)
+
+If you need to override the API URL, add this in Vercel project settings:
+
+| Variable | Value |
+|----------|-------|
+| `VITE_API_URL` | `https://myshop-server-0mz8.onrender.com` |
+
+## Project Structure
+
+```
+src/
+├── components/      # React components
+├── config/          # API configuration
+├── hooks/           # Custom React hooks
+├── types/           # TypeScript interfaces
+├── App.tsx          # Main App component
+└── main.tsx         # Entry point with routing
+```
+
+## API Endpoints Used
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/items` | Get all items |
+| `GET /api/items/full` | Get items with categories |
+| `GET /api/items/:id` | Get single item by ID |
+
+## License
+
+MIT

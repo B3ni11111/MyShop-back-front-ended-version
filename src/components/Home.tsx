@@ -6,13 +6,14 @@ import { Link } from "react-router-dom";
 import { Typography, Button, CircularProgress } from "@mui/material";
 import BetterItem from "./BetterItem";
 import type { itemsDataInterface } from "../types/itemsDataInterface";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function Home() {
   const [data, setData] = useState<itemsDataInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/items/full")
+    fetch(API_ENDPOINTS.itemsFull)
       .then((res) => res.json())
       .then((data) => setData(data))
       .finally(() => setLoading(false));
