@@ -6,17 +6,17 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.itemsService.findAll();
   }
 
   @Get('full')
-  findAllWithCategories() {
+  async findAllWithCategories() {
     return this.itemsService.findAllWithCategories();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     const numericId = Number(id);
     if (isNaN(numericId)) {
       throw new BadRequestException(`Invalid item id: ${id}`);

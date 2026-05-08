@@ -1,18 +1,25 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import itemsData from '../data/items.json';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CategoryDocument } from './schemas/category.schema';
 
 @Injectable()
 export class ItemsService {
-  private items = itemsData.flatMap((category) =>
-    category.category.subCategory.flatMap((sub) => sub.items),
-  );
+  constructor(
+    @InjectModel(CategoryDocument.name)
+    private categoryModel: Model<CategoryDocument>,
+  ) {}
 
-  findAll() {
-    return this.items;
+  async findAll() {
+    const categories = await this.categoryModel.find().lean().exec();
+    return categories.flatMap((entry) =>
+      entry.category.subCategory.flatMap((sub) => sub.items),
+    );
   }
 
-  findOne(id: number) {
-    for (const entry of itemsData) {
+  async findOne(id: number) {
+    const categories = await this.categoryModel.find().lean().exec();
+    for (const entry of categories) {
       for (const subCat of entry.category.subCategory) {
         const item = subCat.items.find((i) => i.id === id);
         if (item) {
@@ -28,7 +35,7 @@ export class ItemsService {
     throw new NotFoundException(`Item with id ${id} not found`);
   }
 
-  findAllWithCategories() {
-    return itemsData;
+  async findAllWithCategories() {
+    return this.categoryModel.find().lean().exec();
   }
 }
