@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  S3 bucket for hosting the MyShop React frontend as a static website.
+  This bucket serves the built React app directly from S3 — no server needed.
+
+# ---------------------------------------------------------------------------
+# Resources — the actual AWS infrastructure to create
+# ---------------------------------------------------------------------------
+Resources:
+
+  # The S3 bucket that will hold the built React files (index.html, JS, CSS…)
+  FrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: myshop-frontend-benny
+
+      # Enable static website hosting so S3 knows how to serve HTML files.
+      # Both index and error point to index.html so React Router handles all
+      # routes client-side (SPA routing — without this, refreshing /cart gives a 403).
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+
+      # By default AWS blocks all public access as a safety guard.
+      # We must explicitly turn those blocks off before the bucket policy below
+      # can make objects publicly readable.
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        IgnorePublicAcls: false
+        BlockPublicPolicy: false
+        RestrictPublicBuckets: false
+
+  # A bucket policy that grants anonymous read access to every object.
+  # Without this, visitors would get "Access Denied" when their browser
+  # tries to fetch index.html or the JS/CSS bundles.
+  FrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      # Attach the policy to the bucket created above (referenced by logical ID)
+      Bucket: !Ref FrontendBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"        # "*" means anyone on the internet
+            Action: s3:GetObject  # read-only — visitors can download but not upload
+            Resource: !Sub "arn:aws:s3:::${FrontendBucket}/*"  # every object in the bucket
+
+# ---------------------------------------------------------------------------
+# Outputs — values shown in the CloudFormation console after the stack deploys,
+#           and accessible to other stacks via cross-stack references
+# ---------------------------------------------------------------------------
+Outputs:
+
+  # The public URL you paste into a browser to open the site
+  WebsiteURL:
+    Description: S3 static website URL for the MyShop frontend
+    Value: !GetAtt FrontendBucket.WebsiteURL
+
+  # The plain bucket name — useful when you need to run:
+  #   aws s3 sync ./front/build s3://<BucketName>
+  BucketName:
+    Description: Name of the S3 bucket
+    Value: !Ref FrontendBucket
